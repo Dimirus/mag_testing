@@ -14,7 +14,7 @@ supported_languages = {
     'česky': 'cs',
     'dansk': 'da',
     'Deutsch': 'de',
-    'British English': 'en-gb',
+    'British English': 'en',
     'Ελληνικά': 'el',
     'español': 'es',
     'suomi': 'fi',
@@ -35,7 +35,7 @@ supported_languages = {
 def pytest_addoption(parser):
     parser.addoption('--browser_name', action='store', default='chrome',
                      help="Choose browser: chrome or firefox")
-    parser.addoption('--language', action='store', default='en-gb',
+    parser.addoption('--language', action='store', default='en',
                      help=f"""Choose language: {', '.join(supported_languages.keys())}""")
 
 
