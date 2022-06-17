@@ -13,6 +13,7 @@ class BasePage():
     def is_element_present(self, how, what):
         try:
             self.browser.find_element(how, what)
+            #"find_element" function included in webdriver
         except NoSuchElementException:
             return False
         return True
