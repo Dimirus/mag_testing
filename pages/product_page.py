@@ -16,24 +16,15 @@ class ProductPage(BasePage):
     def remember_name_and_price(self):
         self.chosed_name = self.browser.find_element(*ProductPageLocators.CHOSED_NAME).text
         self.chosed_price = self.browser.find_element(*ProductPageLocators.CHOSED_PRICE).text
-        
+            
     def take_a_sale(self):
         self.solve_quiz_and_get_code()
-    
-    
-    
-    
-    
+        
     def item_in_box(self):
-        
         added_name = self.browser.find_element(*ProductPageLocators.ADDED_NAME).text
-        
-        
-        assert self.chosed_name in added_name, "Added book isn`t chosed book"
-        
-        
+        assert self.chosed_name == added_name, f"Added book isn`t chosed book. Should be <{self.chosed_name}>,but in fact <{added_name}>"
+            
     def cost_is_price(self):
         added_price = self.browser.find_element(*ProductPageLocators.ADDED_PRICE).text
-        
-        assert self.chosed_price in added_price, "Added book price in basket not correct"  
+        assert self.chosed_price in added_price, f"Added book price in basket not correct.Should be <{self.chosed_price}>,but in fact <{added_price}>"  
         
