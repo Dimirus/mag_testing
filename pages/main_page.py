@@ -5,12 +5,9 @@ from .login_page import LoginPage
 
 class MainPage(BasePage):
     
-    def go_to_login_page(self):
-        
-        login_link = self.browser.find_element(*MainPageLocators.LOGIN_LINK) 
-        # * means that we must uppack tuple
-        login_link.click()
-        
-        
-    def should_be_login_link(self):
-        assert self.is_element_present(*MainPageLocators.LOGIN_LINK), "Login link is not presented"
+    def __init__(self, *args, **kwargs):
+        # *args - unpacking list of arguments, 
+        #**kwargs - unpacking dict with keyword(named) arguments
+        super(MainPage, self).__init__(*args, **kwargs)
+        # call constructor of parent class (Mainpage) and
+        # pull him all arguments which has been received by MainPage
