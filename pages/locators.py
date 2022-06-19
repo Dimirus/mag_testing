@@ -20,4 +20,9 @@ class ProductPageLocators():
 class BasePageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link") #this is a pair,
         #tuple of (how_to_find, what_to_find)
-    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+    BASKET_LINK = (By.CSS_SELECTOR, "span a.btn-default")
+    
+    
+class BasketPageLocators():    
+    EMPTY_BASKET = (By.CSS_SELECTOR, "#content_inner > p")
+    BASKET_TITLE = (By.CSS_SELECTOR, ".basket-title")

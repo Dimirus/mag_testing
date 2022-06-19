@@ -16,7 +16,12 @@ class BasePage():
         # * means that we must uppack tuple
         link.click()
         
-    def is_disappared(self, how ,what, timeout = 4):
+    def go_to_basket_page(self):
+        link = self.browser.find_element(*BasePageLocators.BASKET_LINK)
+        # * means that we must uppack tuple
+        link.click()
+        
+    def is_disappeared(self, how ,what, timeout = 4):
         try:
             WebDriverWait(self.browser, timeout, 1, TimeoutException). \
                 until_not(EC.presence_of_element_located((how, what)))
