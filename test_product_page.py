@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from .pages.product_page import ProductPage
 import time, pytest
+
 @pytest.mark.parametrize('number_promo', ["0", "1", "2", "3", "4", "5", "6", pytest.param("7", marks=pytest.mark.xfail), "8", "9"])
 
 def test_guest_can_add_product_to_basket(browser,number_promo):
@@ -16,4 +17,28 @@ def test_guest_can_add_product_to_basket(browser,number_promo):
     # the same as the product that we added to the basket.
     page.cost_is_price() # Test message, which talks about cost of item in basket. Cost of 
     #item in basket should be match the price of the item that we added to the basket.
-     
+
+@pytest.mark.xfail 
+def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+    page = ProductPage(browser,link) #initialize Page Object, 
+        #and pass into constructor exemplar of driver and url address 
+    page.open() # open page with the help of class Base_page function
+    page.add_to_basket() #execute page method-add item into basket
+    page.should_not_be_success_message() #Check There is no success message
+    
+def test_guest_cant_see_success_message(browser):
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+    page = ProductPage(browser,link) #initialize Page Object, 
+        #and pass into constructor exemplar of driver and url address 
+    page.open() # open page with the help of class Base_page function
+    page.should_not_be_success_message() #Check There is no success message
+
+@pytest.mark.xfail    
+def test_message_disappeared_after_adding_product_to_basket(browser):
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+    page = ProductPage(browser,link) #initialize Page Object, 
+        #and pass into constructor exemplar of driver and url address 
+    page.open() # open page with the help of class Base_page function
+    page.add_to_basket() #execute page method-add item into basket
+    page.message_should_be_disappeared() #Check that the message is disappeared

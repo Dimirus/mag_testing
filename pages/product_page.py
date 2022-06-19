@@ -7,6 +7,14 @@ class ProductPage(BasePage):
     chosed_name = ''
     chosed_price = ''
     
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE),\
+            "Success message is presented, but should not be"
+    def message_should_be_disappeared(self):
+        assert self.is_disappared(*ProductPageLocators.SUCCESS_MESSAGE),\
+            "Success message is presented, but should not be"
+    
+    
     def add_to_basket(self):
         
         add_link = self.browser.find_element(*ProductPageLocators.ADD_LINK) 
