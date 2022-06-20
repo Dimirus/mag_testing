@@ -33,6 +33,7 @@ supported_languages = {
 }
 
 def pytest_addoption(parser):
+    """add console parameters to pytest"""
     parser.addoption('--browser_name', action='store', default='chrome',
                      help="Choose browser: chrome or firefox")
     parser.addoption('--language', action='store', default='en',
@@ -41,7 +42,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope="function")
 def browser(request):
-    browser_name = request.config.getoption("browser_name")
+    browser_name = request.config.getoption("browser_name") #get constants from console parameters
     language = request.config.getoption("language")
 
     if browser_name not in supported_browsers:
