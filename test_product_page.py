@@ -1,12 +1,46 @@
-import time, pytest
+import time, pytest, random
 from selenium.webdriver.common.by import By
 from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
 from .pages.basket_page import BasketPage
 
+class TestUserAddToBasketFromProductPage():
+    
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        email = "D" + str(random.randint(0,999)) + "@fakemail.org"
+        password = str(time.time()) + "jacfsl812"
+        link = "http://selenium1py.pythonanywhere.com/accounts/login/"
+        page = LoginPage(browser,link) #initialize Page Object, 
+            #and pass into constructor exemplar of driver and url address 
+        page.open() # open page with the help of class Base_page function
+        page.register_new_user(email, password) #register new user
+        page.should_be_authorized_user() #check if user autorized
+    
+    #@pytest.mark.skip    
+    def test_user_cant_see_success_message(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        page = ProductPage(browser,link) #initialize Page Object, 
+            #and pass into constructor exemplar of driver and url address 
+        page.open() # open page with the help of class Base_page function
+        page.should_not_be_success_message() #Check There is no success message
+
+    #@pytest.mark.skip
+    def test_user_can_add_product_to_basket(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        page = ProductPage(browser,link) #initialize Page Object, 
+            #and pass into constructor exemplar of driver and url address 
+        page.open() # open page with the help of class Base_page function
+        page.remember_name_and_price() #remember_name_and_price of chosen book
+        page.add_to_basket() #execute page method-add item into basket
+        page.item_in_box() # Test message, which talks that item in basket. Name of item should be
+            #the same as the product that we added to the basket.
+        page.cost_is_price() # Test message, which talks about cost of item in basket. Cost of 
+            #item in basket should be match the price of the item that we added to the basket.
+
 @pytest.mark.parametrize('number_promo', ["0", "1", "2", "3", "4", "5", "6", pytest.param("7", marks=pytest.mark.xfail), "8", "9"])
 #@pytest.mark.skip
-def test_guest_can_add_product_to_basket(browser,number_promo):
+def test_guest_can_add_product_to_basket(browser, number_promo):
     link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{number_promo}"
     page = ProductPage(browser,link) #initialize Page Object, 
         #and pass into constructor exemplar of driver and url address 
@@ -16,9 +50,10 @@ def test_guest_can_add_product_to_basket(browser,number_promo):
     page.take_a_sale() # handle alert and take_a_sale
     time.sleep(3)
     page.item_in_box() # Test message, which talks that item in basket. Name of item should be
-    # the same as the product that we added to the basket.
+        #the same as the product that we added to the basket.
     page.cost_is_price() # Test message, which talks about cost of item in basket. Cost of 
-    #item in basket should be match the price of the item that we added to the basket.
+        #item in basket should be match the price of the item that we added to the basket.
+
 
 @pytest.mark.xfail 
 #@pytest.mark.skip
